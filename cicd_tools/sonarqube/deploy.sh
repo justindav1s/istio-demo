@@ -21,7 +21,7 @@ oc delete route ${APP}
 oc new-app -f sonarqube-persistent-template.yml \
     -p DOMAIN=${DOMAIN} \
     -p APPLICATION_NAME=${APP} \
-    -p SOURCE_REPOSITORY_URL=https://github.com/justindav1s/microservices-on-openshift.git \
+    -p SOURCE_REPOSITORY_URL=https://github.com/justindav1s/istio-demo.git \
     -p SOURCE_REPOSITORY_URL=master \
     -p DOCKERFILE_PATH="cicd_tools/sonarqube" \
     -p SONARQUBE_JDBC_USERNAME=${DATABASE_USER} \
