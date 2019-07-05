@@ -22,6 +22,6 @@ oc project ${PROJECT}
 cd user && ./setup.sh && cd -
 cd basket && ./setup.sh && cd -
 cd api-gateway && ./setup.sh && cd -
-cd inventory && ./setup_v1.sh &&  ./setup_v2.sh && ./setup_v3.sh && cd -
+cd inventory && ./setup_v1.sh && cd -
 cd web && ./setup.sh && cd -
 cd websso && ./setup.sh && cd -
