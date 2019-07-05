@@ -5,9 +5,8 @@ import groovy.transform.Field
 node('maven') {
 
     def mvn          = "mvn -U -B -q -s ../settings.xml -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true"
-    def dev_project  = "${org}-dev"
-    def prod_project = "${org}-prod"
-    def app_url_dev  = "http://${app_name}.${dev_project}.svc:8080"
+    def project      = "${org}"
+    def app_url_dev  = "http://${app_name}.${project}.svc:8080"
     def sonar_url    = "http://sonarqube.cicd.svc:9000"
     def nexus_url    = "http://nexus.cicd.svc:8081/repository/maven-snapshots"
     def registry     = "docker-registry.default.svc:5000"
@@ -49,7 +48,7 @@ node('maven') {
         //Build the OpenShift Image in OpenShift and tag it.
         stage('Build and Tag OpenShift Image') {
             echo "Building OpenShift container image ${app_name}:${devTag}"
-            echo "Project : ${dev_project}"
+            echo "Project : ${project}"
             echo "App : ${app_name}"
             echo "Group ID : ${groupId}"
             echo "Artifact ID : ${artifactId}"
@@ -61,7 +60,7 @@ node('maven') {
             sh "pwd; ls -ltr"
 
             openshift.withCluster() {
-                openshift.withProject("${dev_project}") {
+                openshift.withProject("${project}") {
 
                     echo "Building ...."
                     def nb = openshift.startBuild("${app_name}", "--from-file=${artifactId}-${commitId}.${packaging}")
@@ -78,17 +77,17 @@ node('maven') {
         // Deploy the built image to the Development Environment.
         stage('Deploy to Dev') {
             echo "Deploying container image to Development Project"
-            echo "Project : ${dev_project}"
+            echo "Project : ${project}"
             echo "App : ${app_name}"
             echo "Dev Tag : ${devTag}"
 
             openshift.withCluster() {
-                openshift.withProject(dev_project) {
+                openshift.withProject(project) {
                     //remove any triggers
-                    openshift.set("triggers", "dc/${app_name}", "--remove-all");
+                    openshift.set("triggers", "dc/${app_name}-${prodTag}", "--remove-all");
 
                     //update deployment config with new image
-                    openshift.set("image", "dc/${app_name}", "${app_name}=${registry}/${dev_project}/${app_name}:${commitId}")
+                    openshift.set("image", "dc/${app_name}-${prodTag}", "${app_name}=${registry}/${project}/${app_name}:${commitId}")
 
                     //update app config
                     openshift.delete("configmap", "${app_name}-config", "--ignore-not-found=true")
@@ -121,8 +120,8 @@ node('maven') {
         dir("build-metadata") {
 
 //            stage('manage version data') {
-//                echo "Project : ${dev_project}"
-//                manageVersionData(commitId, commitmsg, groupId, artifactId, dev_project)
+//                echo "Project : ${project}"
+//                manageVersionData(commitId, commitmsg, groupId, artifactId, project)
 //            }
 
         }
