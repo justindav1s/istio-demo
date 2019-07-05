@@ -13,15 +13,15 @@ SERVICE_NAME=${APP}-${ENV}
 
 oc login https://${IP}:8443 -u $USER
 
-oc project ${PROD_PROJECT}
+oc project ${PROJECT}
 
-oc delete dc ${APP}-${VERSION_LABEL} -n ${PROD_PROJECT}
-oc delete deployments ${APP}-${VERSION_LABEL} -n ${PROD_PROJECT}
-oc delete svc ${SERVICE_NAME} -n ${PROD_PROJECT}
-oc delete sa ${SERVICEACCOUNT_NAME} -n ${PROD_PROJECT}
+oc delete dc ${APP}-${VERSION_LABEL} -n ${PROJECT}
+oc delete deployments ${APP}-${VERSION_LABEL} -n ${PROJECT}
+oc delete svc ${SERVICE_NAME} -n ${PROJECT}
+oc delete sa ${SERVICEACCOUNT_NAME} -n ${PROJECT}
 
-oc delete configmap ${APP}-${SPRING_PROFILES_ACTIVE}-config --ignore-not-found=true -n ${PROD_PROJECT}
-oc create configmap ${APP}-${SPRING_PROFILES_ACTIVE}-config --from-file=../../src/user/src/main/resources/config.${SPRING_PROFILES_ACTIVE}.properties -n ${PROD_PROJECT}
+oc delete configmap ${APP}-${SPRING_PROFILES_ACTIVE}-config --ignore-not-found=true -n ${PROJECT}
+oc create configmap ${APP}-${SPRING_PROFILES_ACTIVE}-config --from-file=../../src/user/src/main/resources/config.${SPRING_PROFILES_ACTIVE}.properties -n ${PROJECT}
 
 oc new-app -f ../service-template.yaml \
     -p APPLICATION_NAME=${APP} \

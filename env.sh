@@ -4,6 +4,7 @@ export IP=192.168.0.22.xip.io
 export USER=justin
 
 export CICD_PROJECT=cicd
+export PROJECT=amazin
 
 #Set Postgresql up like this :
 #Database Service Name
