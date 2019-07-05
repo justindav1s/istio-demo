@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  inventory_backend : "http://api-gateway-amazin-dev.apps.ocp.datr.eu",
-  basket_backend : "http://api-gateway-amazin-dev.apps.ocp.datr.eu",
-  user_backend : "http://api-gateway-amazin-dev.apps.ocp.datr.eu"
+  inventory_backend : "https://api-gateway-prd-amazin.apps.192.168.0.22.xip.io",
+  basket_backend : "https://api-gateway-prd-amazin.apps.192.168.0.22.xip.io",
+  user_backend : "https://api-gateway-prd-amazin.apps.192.168.0.22.xip.io"
 };
 
 /*
