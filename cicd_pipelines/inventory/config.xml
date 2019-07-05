@@ -49,7 +49,7 @@
                 <hudson.model.StringParameterDefinition>
                     <name>prodTag</name>
                     <description>the version tag for a production version</description>
-                    <defaultValue>v3</defaultValue>
+                    <defaultValue>v1</defaultValue>
                 </hudson.model.StringParameterDefinition>
             </parameterDefinitions>
         </hudson.model.ParametersDefinitionProperty>
