@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-APP=websso
+APP=web
 
 . ../../env.sh
 

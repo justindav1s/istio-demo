@@ -34,7 +34,7 @@
                 <hudson.model.StringParameterDefinition>
                     <name>git_url</name>
                     <description>the git url for the project</description>
-                    <defaultValue>https://github.com/justindav1s/microservices-on-openshift.git</defaultValue>
+                    <defaultValue>https://github.com/justindav1s/istio-demo.git</defaultValue>
                 </hudson.model.StringParameterDefinition>
                 <hudson.model.StringParameterDefinition>
                     <name>config_file</name>
@@ -62,7 +62,7 @@
             <configVersion>2</configVersion>
             <userRemoteConfigs>
                 <hudson.plugins.git.UserRemoteConfig>
-                    <url>https://github.com/justindav1s/microservices-on-openshift.git</url>
+                    <url>https://github.com/justindav1s/istio-demo.git</url>
                 </hudson.plugins.git.UserRemoteConfig>
             </userRemoteConfigs>
             <branches>
@@ -74,7 +74,7 @@
             <submoduleCfg class="list"/>
             <extensions/>
         </scm>
-        <scriptPath>cicd_pipelines/java.pipeline.groovy</scriptPath>
+        <scriptPath>cicd_pipelines/gitops.java.pipeline.groovy</scriptPath>
         <lightweight>true</lightweight>
     </definition>
     <triggers/>

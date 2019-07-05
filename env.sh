@@ -6,21 +6,10 @@ export USER=justin
 export CICD_PROJECT=cicd
 export PROJECT=amazin
 
-#Set Postgresql up like this :
-#Database Service Name
-#postgresql-sonar
-#The name of the OpenShift Service exposed for the database.
-#
-#PostgreSQL Connection Username
-#sonar
-#Username for PostgreSQL user that will be used for accessing the database.
-#
-#PostgreSQL Connection Password
-#sonar
-#Password for the PostgreSQL connection user.
-#
-#PostgreSQL Database Name
-#sonar
+export CURL="curl -k -v"
+export JENKINS=jenkins-cicd.apps.192.168.0.22.xip.io
+export JENKINS_TOKEN=119d9988d1ef7a30bea612805759277441
+export JENKINS_USER=justin-admin-edit-view
 
 export DOMAIN=$CICD_PROJECT
 export DATABASE_USER="sonar"
