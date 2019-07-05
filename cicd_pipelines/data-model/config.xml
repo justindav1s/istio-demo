@@ -34,7 +34,7 @@
                 <hudson.model.StringParameterDefinition>
                     <name>git_url</name>
                     <description>the git url for the project</description>
-                    <defaultValue>https://github.com/justindav1s/microservices-on-openshift.git</defaultValue>
+                    <defaultValue>https://github.com/justindav1s/istio-demo.git</defaultValue>
                 </hudson.model.StringParameterDefinition>
             </parameterDefinitions>
         </hudson.model.ParametersDefinitionProperty>

@@ -67,7 +67,7 @@
             <configVersion>2</configVersion>
             <userRemoteConfigs>
                 <hudson.plugins.git.UserRemoteConfig>
-                    <url>https://github.com/justindav1s/microservices-on-openshift.git</url>
+                    <url>https://github.com/justindav1s/istio-demo.git</url>
                 </hudson.plugins.git.UserRemoteConfig>
             </userRemoteConfigs>
             <branches>
