@@ -35,9 +35,13 @@ node('maven') {
         // Using Maven run the unit tests
         stage('Unit/Integration Tests') {
             echo "Running Unit Tests"
-            sh "${mvn} test -Dmaven.wagon.http.ssl.insecure=true -Dspring.profiles.active=dev"
+            sh "${mvn} test -Dspring.profiles.active=dev"
             archive "target/**/*"
             junit 'target/surefire-reports/*.xml'
+        }
+
+        stage('Sonar Quality Checks') {
+            sh "${mvn} sonar:sonar -Dspring.profiles.active=dev"
         }
 
         stage('Deploy jar') {
