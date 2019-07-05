@@ -6,13 +6,13 @@ server:
   port: 8080
 
 basket:
-  host: basket-amazin-dev.apps.ocp.datr.eu
+  host: basket-prd:8080
 
 inventory:
-  host: inventory-amazin-dev.apps.ocp.datr.eu
+  host: inventory-prd:8080
 
 user:
-  host: user-amazin-dev.apps.ocp.datr.eu
+  host: user-prd:8080
 
 opentracing:
   jaeger:
