@@ -53,8 +53,7 @@ objects:
     name: ${APPLICATION_NAME}-${VERSION_LABEL}
   spec:
     progressDeadlineSeconds: 600
-    replicas: 0
-    revisionHistoryLimit: 10
+    replicas: 1
     selector:
       app: ${APPLICATION_NAME}
       deploymentconfig: ${APPLICATION_NAME}
