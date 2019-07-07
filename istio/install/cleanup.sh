@@ -2,6 +2,9 @@
 
 oc delete project istio-operator
 
+oc delete installations.istio.openshift.com "basic-install"
+oc delete servicemeshcontrolplane.maistra.io "basic-install"
+
 oc delete customresourcedefinitions.apiextensions.k8s.io cloudwatches.config.istio.io
 oc delete customresourcedefinitions.apiextensions.k8s.io dogstatsds.config.istio.io
 oc delete customresourcedefinitions.apiextensions.k8s.io virtualservices.networking.istio.io
@@ -66,8 +69,6 @@ oc delete customresourcedefinition controlplanes.istio.openshift.com installatio
 
 oc delete crd monitoringdashboards.monitoring.kiali.io
 
-oc delete installations.istio.openshift.com "basic-install"
-oc delete servicemeshcontrolplane.maistra.io "basic-install"
 
 oc delete crd installations.istio.openshift.com
 

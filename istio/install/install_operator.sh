@@ -4,7 +4,6 @@
 
 OCP=https://${IP}:8443
 PROJECT=istio-operator
-USER=justin
 
 oc login ${OCP} -u $USER
 
@@ -26,4 +25,7 @@ while [ $? \> 0 ]; do
 oc new-project $PROJECT 2> /dev/null
 done
 
-oc apply -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-0.10/deploy/servicemesh-operator.yaml
+#oc apply -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-0.10/deploy/servicemesh-operator.yaml
+oc apply -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-0.11/deploy/servicemesh-operator.yaml
+#oc apply -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-0.12/deploy/servicemesh-operator.yaml
+#oc apply -n istio-operator -f https://raw.githubusercontent.com/Maistra/istio-operator/maistra-0.12/deploy/maistra-operator.yaml

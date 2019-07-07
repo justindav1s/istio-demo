@@ -18,16 +18,16 @@ metadata:
           limits:
             cpu: 500m
             memory: 128Mi
-      mtls: true
-      disablePolicyChecks: false
-      policyCheckFailOpen: false
+      mtls: false
+      disablePolicyChecks: true
+      policyCheckFailOpen: true
 
     gateways:
       istio-egressgateway:
         autoscaleEnabled: false
       istio-ingressgateway:
         autoscaleEnabled: false
-        ior_enabled: true
+        ior_enabled: false
 
     mixer:
       policy:
@@ -54,5 +54,7 @@ metadata:
       dashboard:
         user: admin
         passphrase: admin
+    tracing:
+      enabled: false
 
     multitenant: false

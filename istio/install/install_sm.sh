@@ -5,13 +5,12 @@
 OCP=https://${IP}:8443
 PROJECT=istio-system
 OP_PROJECT=istio-operator
-USER=justin
 
 oc login ${OCP} -u $USER
 
 #./cleanup.sh
 
-oc project $OP_PROJECT
+oc project $PROJECT
 
-oc create -n istio-system -f istio-installation-3.11_0.10.yaml
+oc create -n istio-system -f istio-installation-3.11_0.11.yaml
 
