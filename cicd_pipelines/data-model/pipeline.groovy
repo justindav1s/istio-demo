@@ -28,11 +28,11 @@ node('maven') {
             sh "${mvn} test"
         }
 
-        // Using Maven call SonarQube for Code Analysis
-        stage('Code Analysis') {
-            echo "Running Code Analysis"
-            sh "${mvn} sonar:sonar -Dsonar.host.url=${sonar_url}"
-        }
+//        // Using Maven call SonarQube for Code Analysis
+//        stage('Code Analysis') {
+//            echo "Running Code Analysis"
+//            sh "${mvn} sonar:sonar -Dsonar.host.url=${sonar_url}"
+//        }
 
         // Publish the built war file to Nexus
         stage('Publish to Nexus') {
