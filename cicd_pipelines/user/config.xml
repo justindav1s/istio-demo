@@ -79,7 +79,7 @@
             <submoduleCfg class="list"/>
             <extensions/>
         </scm>
-        <scriptPath>cicd_pipelines/gitops.java.pipeline.groovy</scriptPath>
+        <scriptPath>cicd_pipelines/java.pipeline.groovy</scriptPath>
         <lightweight>true</lightweight>
     </definition>
     <triggers/>

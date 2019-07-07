@@ -39,17 +39,7 @@ node('maven') {
 //            archive "target/**/*"
 //            junit 'target/surefire-reports/*.xml'
 //        }
-//
-//        stage('Coverage') {
-//            echo "Running Coverage"
-//            sh "${mvn} clean org.jacoco:jacoco-maven-plugin:prepare-agent install -Dspring.profiles.active=dev"
-//        }
-//
-//        // Using Maven call SonarQube for Code Analysis
-//        stage('Code Analysis') {
-//            echo "Running Code Analysis"
-//            sh "${mvn} sonar:sonar -Dspring.profiles.active=dev -Dsonar.host.url=${sonar_url}"
-//        }
+
 
         // Publish the built war file to Nexus
         stage('Publish to Nexus') {
