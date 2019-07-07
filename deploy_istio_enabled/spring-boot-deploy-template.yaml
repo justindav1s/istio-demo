@@ -41,8 +41,6 @@ objects:
           namespace: ${BASE_IMAGE_NAMESPACE}
       type: Source
 
-
-
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
