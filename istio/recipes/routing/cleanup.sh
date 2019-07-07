@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-oc delete servicerole --all -n amazin
-oc delete virtualservice --all -n amazin
-oc delete destinationrule --all -n amazin
-oc delete gateway --all -n amazin
+. ../../../env.sh
+
+oc project ${PROJECT}
+
+oc delete virtualservice --all -n ${PROJECT}
+oc delete destinationrule --all -n ${PROJECT}
+oc delete gateway --all -n ${PROJECT}

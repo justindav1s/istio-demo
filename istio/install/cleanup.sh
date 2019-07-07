@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
-oc delete project istio-operator
+oc delete servicemeshcontrolplane.maistra.io "basic-install" -n istio-system
 
-oc delete installations.istio.openshift.com "basic-install"
-oc delete servicemeshcontrolplane.maistra.io "basic-install"
+oc delete project istio-operator
 
 oc delete customresourcedefinitions.apiextensions.k8s.io cloudwatches.config.istio.io
 oc delete customresourcedefinitions.apiextensions.k8s.io dogstatsds.config.istio.io

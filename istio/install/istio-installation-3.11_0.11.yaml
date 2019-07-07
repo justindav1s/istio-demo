@@ -9,7 +9,7 @@ metadata:
   istio:
     global:
       hub: "registry.redhat.io/openshift-istio-tech-preview/"
-      tag: 0.11.0
+      tag: latest
       proxy:
         resources:
           requests:
