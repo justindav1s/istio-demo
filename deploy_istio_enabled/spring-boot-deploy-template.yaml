@@ -119,9 +119,10 @@ objects:
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         schedulerName: default-scheduler
-        securityContext: {}
-        serviceAccount: ${SERVICEACCOUNT_NAME}
-        serviceAccountName: ${SERVICEACCOUNT_NAME}
+        securityContext:
+          runAsUser: 0
+#        serviceAccount: ${SERVICEACCOUNT_NAME}
+#        serviceAccountName: ${SERVICEACCOUNT_NAME}
         terminationGracePeriodSeconds: 30
         volumes:
           - configMap:

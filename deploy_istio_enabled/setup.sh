@@ -20,7 +20,8 @@ oc policy add-role-to-user view --serviceaccount=default -n ${PROJECT}
 oc adm policy add-scc-to-user privileged -z default -n ${PROJECT}
 oc adm policy add-scc-to-user anyuid -z default -n ${PROJECT}
 
-oc label namespace amazin istio-injection=enabled --overwrite=true
+oc label namespace $PROJECT istio-injection=enabled --overwrite=true
+oc policy add-role-to-user view system:serviceaccount:istio-system:kiali-service-account -n $PROJECT
 
 oc project ${PROJECT}
 

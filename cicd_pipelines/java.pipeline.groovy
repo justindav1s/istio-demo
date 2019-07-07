@@ -76,48 +76,48 @@ node('maven') {
 
         }
 
-        // Deploy the built image to the Development Environment.
-        stage('Deploy to Dev') {
-            echo "Deploying container image to Development Project"
-            echo "Project : ${project}"
-            echo "App : ${app_name}"
-            echo "Dev Tag : ${devTag}"
-
-            openshift.withCluster() {
-                openshift.withProject(project) {
-                    //remove any triggers
-                    openshift.set("triggers", "dc/${app_name}-${prodTag}", "--remove-all");
-
-                    //update deployment config with new image
-                    openshift.set("image", "dc/${app_name}-${prodTag}", "${app_name}=${registry}/${project}/${app_name}:${commitId}")
-
-                    //update app config
-                    openshift.delete("configmap", "${app_name}-config", "--ignore-not-found=true")
-                    openshift.create("configmap", "${app_name}-config", "--from-file=${config_file}")
-
-                    //trigger a rollout of the new image
-                    def rm = openshift.selector("dc", [app:app_name]).rollout().latest()
-                    //wait for rollout to start
-                    timeout(5) {
-                        openshift.selector("dc", [app:app_name]).related('pods').untilEach(1) {
-                            return (it.object().status.phase == "Running")
-                        }
-                    }
-                    //rollout has started
-
-                    //wait for deployment to finish and for new pods to become active
-                    def latestDeploymentVersion = openshift.selector('dc',[app:app_name]).object().status.latestVersion
-                    def rc = openshift.selector("rc", "${app_name}-${latestDeploymentVersion}")
-                    rc.untilEach(1) {
-                        def rcMap = it.object()
-                        return (rcMap.status.replicas.equals(rcMap.status.readyReplicas))
-                    }
-                    //deployment finished
-                }
-            }
-            echo "Deploying container image to Development Project : FINISHED"
-
-        }
+//        // Deploy the built image to the Development Environment.
+//        stage('Deploy to Dev') {
+//            echo "Deploying container image to Development Project"
+//            echo "Project : ${project}"
+//            echo "App : ${app_name}"
+//            echo "Dev Tag : ${devTag}"
+//
+//            openshift.withCluster() {
+//                openshift.withProject(project) {
+//                    //remove any triggers
+//                    openshift.set("triggers", "dc/${app_name}-${prodTag}", "--remove-all");
+//
+//                    //update deployment config with new image
+//                    openshift.set("image", "dc/${app_name}-${prodTag}", "${app_name}=${registry}/${project}/${app_name}:${commitId}")
+//
+//                    //update app config
+//                    openshift.delete("configmap", "${app_name}-config", "--ignore-not-found=true")
+//                    openshift.create("configmap", "${app_name}-config", "--from-file=${config_file}")
+//
+//                    //trigger a rollout of the new image
+//                    def rm = openshift.selector("dc", [app:app_name]).rollout().latest()
+//                    //wait for rollout to start
+//                    timeout(5) {
+//                        openshift.selector("dc", [app:app_name]).related('pods').untilEach(1) {
+//                            return (it.object().status.phase == "Running")
+//                        }
+//                    }
+//                    //rollout has started
+//
+//                    //wait for deployment to finish and for new pods to become active
+//                    def latestDeploymentVersion = openshift.selector('dc',[app:app_name]).object().status.latestVersion
+//                    def rc = openshift.selector("rc", "${app_name}-${latestDeploymentVersion}")
+//                    rc.untilEach(1) {
+//                        def rcMap = it.object()
+//                        return (rcMap.status.replicas.equals(rcMap.status.readyReplicas))
+//                    }
+//                    //deployment finished
+//                }
+//            }
+//            echo "Deploying container image to Development Project : FINISHED"
+//
+//        }
 
         dir("build-metadata") {
 
