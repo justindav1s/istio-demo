@@ -132,7 +132,6 @@ objects:
               defaultMode: 420
               name: ${APPLICATION_NAME}-${SPRING_PROFILES_ACTIVE}-config
             name: ${APPLICATION_NAME}-config-vol
-    triggers: {}
 
 parameters:
   - description: The name for the application.
