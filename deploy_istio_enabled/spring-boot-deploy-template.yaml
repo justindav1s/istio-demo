@@ -53,7 +53,7 @@ objects:
     name: ${APPLICATION_NAME}-${VERSION_LABEL}
   spec:
     progressDeadlineSeconds: 600
-    replicas: 1
+    replicas: 0
     revisionHistoryLimit: 10
     selector:
       app: ${APPLICATION_NAME}
