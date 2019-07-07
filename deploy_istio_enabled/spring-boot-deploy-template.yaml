@@ -78,48 +78,48 @@ objects:
           version: ${VERSION_LABEL}
       spec:
         containers:
-          - env:
-              - name: SPRING_PROFILES_ACTIVE
-                value: "${SPRING_PROFILES_ACTIVE}"
-            image: "docker-registry.default.svc:5000/amazin/${IMAGE_NAME}:${IMAGE_TAG}"
-            imagePullPolicy: Always
-            ports:
-            - containerPort: 8080
-            name: ${APPLICATION_NAME}
-            livenessProbe:
-              failureThreshold: 3
-              exec:
-                command:
-                - curl
-                - -f
-                - http://localhost:8080/health
-              initialDelaySeconds: 10
-              periodSeconds: 10
-              successThreshold: 1
-              timeoutSeconds: 1
-            readinessProbe:
-              failureThreshold: 3
-              exec:
-                command:
-                - curl
-                - -f
-                - http://localhost:8080/health
-              initialDelaySeconds: 10
-              periodSeconds: 10
-              successThreshold: 1
-              timeoutSeconds: 1
-              resources:
-                limits:
-                  cpu: 200m
-                  memory: 512Mi
-                requests:
-                  cpu: 10m
-                  memory: 256Mi
-            terminationMessagePath: /dev/termination-log
-            terminationMessagePolicy: File
-            volumeMounts:
-              - mountPath: /config
-                name: ${APPLICATION_NAME}-config-vol
+        - name: ${APPLICATION_NAME}
+          env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: "${SPRING_PROFILES_ACTIVE}"
+          image: "docker-registry.default.svc:5000/amazin/${IMAGE_NAME}:${IMAGE_TAG}"
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 8080
+          livenessProbe:
+            failureThreshold: 5
+            exec:
+              command:
+              - curl
+              - -f
+              - http://localhost:8080/health
+            initialDelaySeconds: 5
+            periodSeconds: 3
+            successThreshold: 1
+            timeoutSeconds: 1
+          readinessProbe:
+            failureThreshold: 5
+            exec:
+              command:
+              - curl
+              - -f
+              - http://localhost:8080/health
+            initialDelaySeconds: 3
+            periodSeconds: 3
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 200m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /config
+            name: ${APPLICATION_NAME}-config-vol
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         schedulerName: default-scheduler

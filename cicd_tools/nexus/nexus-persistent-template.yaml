@@ -49,9 +49,11 @@ objects:
           terminationGracePeriodSeconds: 30
           resources:
             limits:
-              memory: 2Gi
+              cpu: 200m
+              memory: 512Mi
             requests:
-              memory: 1Gi
+              cpu: 10m
+              memory: 256Mi
           readinessProbe:
             failureThreshold: 3
             httpGet:
