@@ -81,7 +81,7 @@ objects:
           env:
           - name: SPRING_PROFILES_ACTIVE
             value: "${SPRING_PROFILES_ACTIVE}"
-          image: "docker-registry.default.svc:5000/amazin/${IMAGE_NAME}:${IMAGE_TAG}"
+          image: ' '
           imagePullPolicy: Always
           ports:
           - containerPort: 8080
