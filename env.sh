@@ -15,3 +15,5 @@ export DOMAIN=$CICD_PROJECT
 export DATABASE_USER="sonar"
 export DATABASE_PASSWORD="sonar"
 export DATABASE_URL="jdbc:postgresql://postgresql/sonar"
+
+export REGISTRY="docker-registry.default.svc:5000"

@@ -38,6 +38,12 @@ for i in install/kubernetes/helm/istio-init/files/crd*yaml; do oc apply -f $i -n
 
 oc apply -f install/kubernetes/istio-demo.yaml -n ${PROJECT}
 
+10057  oc policy add-role-to-user view system:serviceaccount:istio-system:kiali-service-account -n amazin
+10058  oc policy add-role-to-user view system:serviceaccount:istio-system:kiali-service-account -n cicd
+10059  oc policy add-role-to-user view system:serviceaccount:istio-system:kiali-service-account -n default
+10060  oc policy add-role-to-user view system:serviceaccount:istio-system:kiali-service-account -n istio-system
+10061  oc policy add-role-to-user view system:serviceaccount:istio-system:kiali-service-account -n sso
+10062  oc policy add-role-to-user view system:serviceaccount:istio-system:kiali-service-account -n management-infra
 #edit kiali configmap yo point to http://grafana:3000
 #make an ingress route that points at the http2 service port
 #add this for each project kiali wants to see : oc policy add-role-to-user view system:serviceaccount:istio-system:kiali-service-account -n bookinfo

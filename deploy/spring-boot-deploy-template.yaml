@@ -4,43 +4,6 @@ metadata:
   name: spring-boot-prd-template
 objects:
 
-- apiVersion: image.openshift.io/v1
-  kind: ImageStream
-  metadata:
-    annotations:
-    labels:
-      app: ${APPLICATION_NAME}
-    name: ${APPLICATION_NAME}
-  spec:
-    lookupPolicy:
-      local: false
-
-- apiVersion: build.openshift.io/v1
-  kind: BuildConfig
-  metadata:
-    annotations:
-    labels:
-      app: ${APPLICATION_NAME}
-    name: ${APPLICATION_NAME}
-  spec:
-    output:
-      to:
-        kind: ImageStreamTag
-        name: ${APPLICATION_NAME}:latest
-    postCommit: {}
-    resources: {}
-    runPolicy: Serial
-    source:
-      binary: {}
-      type: Binary
-    strategy:
-      sourceStrategy:
-        from:
-          kind: ImageStreamTag
-          name: ${BASE_IMAGE}
-          namespace: ${BASE_IMAGE_NAMESPACE}
-      type: Source
-
 - apiVersion: apps.openshift.io/v1
   kind: DeploymentConfig
   metadata:
@@ -107,7 +70,7 @@ objects:
             timeoutSeconds: 1
           resources:
             limits:
-              memory: 512Mi
+              memory: 256Mi
             requests:
               cpu: 10m
               memory: 256Mi
@@ -153,11 +116,3 @@ parameters:
     name: SERVICEACCOUNT_NAME
     required: true
     value: "basket-prd-sa"
-  - description: Base Docker image namespace.
-    name: BASE_IMAGE_NAMESPACE
-    required: true
-    value: "openshift"
-  - description: Base Docker image.
-    name: BASE_IMAGE
-    required: true
-    value: "redhat-openjdk18-openshift:1.4"
