@@ -21,6 +21,8 @@ oc delete deployments ${APP}-${VERSION_LABEL} -n ${PROJECT}
 oc delete configmap ${APP}-${SPRING_PROFILES_ACTIVE}-config --ignore-not-found=true -n ${PROJECT}
 oc create configmap ${APP}-${SPRING_PROFILES_ACTIVE}-config --from-file=../../src/inventory/src/main/resources/config.${SPRING_PROFILES_ACTIVE}.properties -n ${PROJECT}
 
+oc policy add-role-to-group system:image-puller system:serviceaccounts:${PROJECT} -n ${PROJECT}-images
+
 oc new-app -f ../spring-boot-deploy-template.yaml \
     -p APPLICATION_NAME=${APP} \
     -p IMAGE_NAME=${IMAGE_NAME} \

@@ -30,8 +30,7 @@ oc new-app -f ../service-template.yaml \
 
 sleep 2
 
-oc policy add-role-to-group system:image-puller system:serviceaccounts:${PROJECT} -n ${PROJECT}
-oc policy add-role-to-group system:image-puller system:serviceaccounts:${SERVICEACCOUNT_NAME} -n ${PROJECT}
+oc policy add-role-to-group system:image-puller system:serviceaccounts:${PROJECT} -n ${PROJECT}-images
 oc adm policy add-scc-to-user anyuid -z ${SERVICEACCOUNT_NAME}
 oc adm policy add-scc-to-user privileged -z ${SERVICEACCOUNT_NAME}
 
@@ -46,3 +45,7 @@ oc new-app -f ../spring-boot-deploy-template.yaml \
     -p SERVICEACCOUNT_NAME=${SERVICEACCOUNT_NAME}
 
 oc set triggers dc/${APP}-${VERSION_LABEL} --remove-all
+
+oc set image dc/${APP}-${VERSION_LABEL} ${APP}=${REGISTRY}/${PROJECT}/${APP}:latest
+
+oc rollout latest dc/${APP}-${VERSION_LABEL}

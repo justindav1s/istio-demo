@@ -2,7 +2,7 @@
 
 . ../../env.sh
 
-APP=user
+APP=basket
 PROJECT=${PROJECT}-images
 
 MVN="mvn -U -s ../settings.xml -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true"
@@ -13,7 +13,6 @@ BASE_IMAGE_NAMESPACE=openshift
 BASE_IMAGE=redhat-openjdk18-openshift:1.4
 
 oc project ${PROJECT}
-oc policy add-role-to-user edit system:serviceaccount:${CICD_PROJECT}:jenkins -n ${PROJECT}
 oc delete bc,is ${APP}
 
 oc new-app -f ../image-build-template.yaml \

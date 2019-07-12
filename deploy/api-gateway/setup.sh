@@ -23,6 +23,8 @@ oc delete sa ${SERVICEACCOUNT_NAME} -n ${PROJECT}
 oc delete configmap ${APP}-${SPRING_PROFILES_ACTIVE}-config --ignore-not-found=true -n ${PROJECT}
 oc create configmap ${APP}-${SPRING_PROFILES_ACTIVE}-config --from-file=../../src/api-gateway/src/main/resources/config.${SPRING_PROFILES_ACTIVE}.properties -n ${PROJECT}
 
+oc policy add-role-to-group system:image-puller system:serviceaccounts:${PROJECT} -n ${PROJECT}-images
+
 oc new-app -f ../service-template.yaml \
     -p APPLICATION_NAME=${APP} \
     -p SERVICEACCOUNT_NAME=${SERVICEACCOUNT_NAME} \
