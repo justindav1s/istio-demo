@@ -1,13 +1,9 @@
 #!groovy
 
-import groovy.transform.Field
-
 node('maven') {
 
     def mvn          = "mvn -U -B -q -s ../settings.xml -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true"
     def project      = "${org}"
-    def app_url_dev  = "http://${app_name}.${project}.svc:8080"
-    def sonar_url    = "http://sonarqube.cicd.svc:9000"
     def nexus_url    = "http://nexus.cicd.svc:8081/repository/maven-snapshots"
     def registry     = "docker-registry.default.svc:5000"
     def groupId, version, packaging = null
@@ -31,15 +27,6 @@ node('maven') {
             echo "Building version : ${version}"
             sh "${mvn} clean package -Dspring.profiles.active=dev -DskipTests"
         }
-
-//        // Using Maven run the unit tests
-//        stage('Unit/Integration Tests') {
-//            echo "Running Unit Tests"
-//            sh "${mvn} test -Dspring.profiles.active=dev"
-//            archive "target/**/*"
-//            junit 'target/surefire-reports/*.xml'
-//        }
-
 
         // Publish the built war file to Nexus
         stage('Publish to Nexus') {
@@ -119,14 +106,6 @@ node('maven') {
 //
 //        }
 
-        dir("build-metadata") {
-
-//            stage('manage version data') {
-//                echo "Project : ${project}"
-//                manageVersionData(commitId, commitmsg, groupId, artifactId, project)
-//            }
-
-        }
     }
 }
 
@@ -149,26 +128,3 @@ def getPackagingFromPom(pom) {
     def matcher = readFile(pom) =~ '<packaging>(.+)</packaging>'
     matcher ? matcher[0][1] : null
 }
-
-//def manageVersionData(commitId, commitmsg, groupId, artifactId, project) {
-//
-//    withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-//        def github_repo = "manifest-test"
-//        def trackingrepo = "https://github.com/${GIT_USERNAME}/${github_repo}.git"
-//        echo "1"
-//        git url: "${trackingrepo}", branch: 'master', credentialsId: 'github'
-//        echo "2"
-//        def versionFileName = "version"
-//        versionFileName = groupId+"."+artifactId+"."+project+"."+versionFileName
-//        echo "3"
-//        @Field def timeStamp = Calendar.getInstance().getTime().format('ddMMyy-HH:mm:ss',TimeZone.getTimeZone('GMT'))
-//        echo "4"
-//        def newVersionString = "{ \\\"build\\\": \\\"${env.BUILD_NUMBER}\\\", \\\"timestamp\\\": \\\"${timeStamp}\\\", \\\"commitId\\\": \\\"${commitId}\\\", \\\"commitMsg\\\": \\\"${commitmsg}\\\"}"
-//        sh(returnStdout: true, script: "echo ${newVersionString} >> ${versionFileName}")
-//        echo "5"
-//        sh (returnStdout: true, script: "git config user.email \"jenkins@${GIT_USERNAME}.dev\"; git config user.name \"${GIT_USERNAME}\"")
-//        sh (returnStdout: true, script: "git add ${versionFileName}")
-//        sh (returnStdout: true, script: "git commit -m \"version data update for ${artifactId} to ${env.BUILD_NUMBER}:${commitId}\" || true")
-//        sh (returnStdout: true, script: "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/${github_repo}.git master || true")
-//    }
-//}
