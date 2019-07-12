@@ -12,43 +12,6 @@ spec:
   selector:
     app: api-gateway
 ---
-apiVersion: image.openshift.io/v1
-kind: ImageStream
-metadata:
-  annotations:
-  labels:
-    app: api-gateway
-  name: api-gateway
-spec:
-  lookupPolicy:
-    local: false
----
-apiVersion: build.openshift.io/v1
-kind: BuildConfig
-metadata:
-  annotations:
-  labels:
-    app: api-gateway
-  name: api-gateway
-spec:
-  output:
-    to:
-      kind: ImageStreamTag
-      name: api-gateway:latest
-  postCommit: {}
-  resources: {}
-  runPolicy: Serial
-  source:
-    binary: {}
-    type: Binary
-  strategy:
-    sourceStrategy:
-      from:
-        kind: ImageStreamTag
-        name: "redhat-openjdk18-openshift:1.4"
-        namespace: openshift
-    type: Source
----
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -67,11 +30,19 @@ spec:
         version: v1
     spec:
       containers:
-        - name: details
+        - name: api-gateway
           env:
-            name: SPRING_PROFILES_ACTIVE
-            value: prd
-          image: ' '
+          - name: SPRING_PROFILES_ACTIVE
+            value: "prd"
+          image: "docker-registry.default.svc:5000/amazin-images/api-gateway:latest"
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
+          volumeMounts:
+          - mountPath: /config
+            name: api-gateway-config-vol
+      volumes:
+        - configMap:
+            defaultMode: 420
+            name: api-gateway-prd-config
+          name: api-gateway-config-vol

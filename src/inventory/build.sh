@@ -1,13 +1,9 @@
 #!/usr/bin/env bash
 
-
-
 . ../../env.sh
 
 APP=inventory
 PROJECT=${PROJECT}-images
-
-echo PROJECT : $PROJECT
 
 MVN="mvn -U -s ../settings.xml -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true"
 

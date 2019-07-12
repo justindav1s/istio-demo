@@ -14817,7 +14817,9 @@ data:
           capabilities:
             add:
             - NET_ADMIN
+          {{- if .Values.global.proxy.privileged }}
           privileged: true
+          {{- end }}
         restartPolicy: Always
         env:
         {{- if contains "*" (annotation .ObjectMeta `traffic.sidecar.istio.io/includeInboundPorts` "") }}

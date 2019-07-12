@@ -22,3 +22,9 @@ oc adm policy add-scc-to-user privileged -z default -n $PROJECT
 oc policy add-role-to-user view system:serviceaccount:istio-system:kiali-service-account -n $PROJECT
 
 oc apply -n $PROJECT -f https://raw.githubusercontent.com/Maistra/bookinfo/master/bookinfo.yaml
+
+
+# oc label namespace bookinfo istio-injection=enabled
+# oc adm policy add-scc-to-user privileged -z default -n bookinfo
+# oc adm policy add-scc-to-user anyuid -z default -n bookinfo
+# oc apply -f https://raw.githubusercontent.com/istio/istio/release-1.2/samples/bookinfo/platform/kube/bookinfo.yaml
