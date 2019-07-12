@@ -24,3 +24,18 @@ ${CURL} -H "Content-Type: text/xml" \
   --data-binary @config.xml \
   -X POST https://${JENKINS}/createItem?name=amazin-${APP}
 
+set -x
+
+BASE_IMAGE_NAMESPACE=openshift
+BASE_IMAGE=redhat-openjdk18-openshift:1.4
+
+oc project ${PROJECT}
+
+oc policy add-role-to-user edit system:serviceaccount:${CICD_PROJECT}:jenkins -n ${PROJECT}
+
+oc delete bc,is ${APP}
+
+oc new-app -f ../image-build-template.yaml \
+      -p APPLICATION_NAME=${APP} \
+      -p BASE_IMAGE_NAMESPACE=${BASE_IMAGE_NAMESPACE} \
+      -p BASE_IMAGE=${BASE_IMAGE}
