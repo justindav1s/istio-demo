@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-prd
+  labels:
+    app: user
+    service: user-prd
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: user
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  annotations:
+  labels:
+    app: user
+  name: user
+spec:
+  lookupPolicy:
+    local: false
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  annotations:
+  labels:
+    app: user
+  name: user
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: user:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    binary: {}
+    type: Binary
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: "redhat-openjdk18-openshift:1.4"
+        namespace: openshift
+    type: Source
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: user
+  labels:
+    app: user
+    version: v1
+spec:
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: user
+        version: v1
+    spec:
+      containers:
+        - name: details
+          env:
+            name: SPRING_PROFILES_ACTIVE
+            value: prd
+          image: ' '
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080

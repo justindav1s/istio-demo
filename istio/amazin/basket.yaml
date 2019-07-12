@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: basket-prd
+  labels:
+    app: basket
+    service: basket-prd
+spec:
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: basket
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  annotations:
+  labels:
+    app: basket
+  name: basket
+spec:
+  lookupPolicy:
+    local: false
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  annotations:
+  labels:
+    app: basket
+  name: basket
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: basket:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    binary: {}
+    type: Binary
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: "redhat-openjdk18-openshift:1.4"
+        namespace: openshift
+    type: Source
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: basket
+  labels:
+    app: basket
+    version: v1
+spec:
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: basket
+        version: v1
+    spec:
+      containers:
+        - name: details
+          env:
+            name: SPRING_PROFILES_ACTIVE
+            value: prd
+          image: ' '
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
