@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-HOST=https://istio-ingressgateway-istio-system.apps.192.168.0.2.xip.io/api
+HOST=http://istio-ingressgateway-istio-system.apps.192.168.33.10.xip.io/api
 CURL="curl -sk"
 
 
@@ -70,10 +70,3 @@ do
     echo GET ${HOST}/products/all
     ${CURL} -X GET ${HOST}/products/all
 done
-
-
-
-
-
-
-

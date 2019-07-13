@@ -37,8 +37,10 @@ for i in install/kubernetes/helm/istio-init/files/crd*yaml; do oc delete -f $i -
 for i in install/kubernetes/helm/istio-init/files/crd*yaml; do oc apply -f $i -n ${PROJECT}; done
 
 oc apply -f install/kubernetes/istio-demo.yaml -n ${PROJECT}
+#oc apply -f install/kubernetes/istio-demo-auth.yaml -n ${PROJECT}
 
 oc policy add-role-to-user view system:serviceaccount:istio-system:kiali-service-account -n amazin
+oc policy add-role-to-user view system:serviceaccount:istio-system:kiali-service-account -n amazin-images
 oc policy add-role-to-user view system:serviceaccount:istio-system:kiali-service-account -n cicd
 oc policy add-role-to-user view system:serviceaccount:istio-system:kiali-service-account -n default
 oc policy add-role-to-user view system:serviceaccount:istio-system:kiali-service-account -n istio-system

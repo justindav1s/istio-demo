@@ -13,8 +13,7 @@ while [ $? \> 0 ]; do
 done
 
 
-oc policy add-role-to-user edit system:serviceaccount:${CICD_PROJECT}:jenkins -n ${PROJECT}
-oc policy add-role-to-user edit system:serviceaccount:${CICD_PROJECT}:default -n ${PROJECT}
+oc policy add-role-to-group system:image-puller system:serviceaccounts:${PROJECT} -n ${PROJECT}-images
 oc policy add-role-to-user view --serviceaccount=default -n ${PROJECT}
 
 oc adm policy add-scc-to-user privileged -z default -n ${PROJECT}
@@ -25,10 +24,9 @@ oc policy add-role-to-user view system:serviceaccount:istio-system:kiali-service
 
 oc project ${PROJECT}
 
-cd user && ./setup.sh && cd -
-cd basket && ./setup.sh && cd -
-cd api-gateway && ./setup.sh && cd -
-cd web && ./setup.sh && cd -
-cd websso && ./setup.sh && cd -
-cd inventory && ./setup_v1.sh &&  ./setup_v2.sh && ./setup_v3.sh && cd -
-
+# cd user && ./setup.sh && cd -
+# cd basket && ./setup.sh && cd -
+# cd api-gateway && ./setup.sh && cd -
+# cd web && ./setup.sh && cd -
+# cd websso && ./setup.sh && cd -
+# cd inventory && ./setup_v1.sh &&  ./setup_v2.sh && ./setup_v3.sh && cd -
