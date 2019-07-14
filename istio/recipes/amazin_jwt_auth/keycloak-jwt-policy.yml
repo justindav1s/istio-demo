@@ -6,19 +6,21 @@ spec:
   targets:
   - name: api-gateway-prd
   - name: inventory-prd
+  - name: user-prd
+  - name: basket-prd  
   origins:
   - jwt:
       issuer: "https://sso-sso.apps.ocp.datr.eu/auth/realms/amazin"
       jwksUri: "https://sso-sso.apps.ocp.datr.eu/auth/realms/amazin/protocol/openid-connect/certs"
   principalBinding: USE_ORIGIN
----
+# ---
 # apiVersion: "authentication.istio.io/v1alpha1"
 # kind: "Policy"
 # metadata:
-#   name: "jwt-example"
+#   name: "jwt-inventory-prd"
 # spec:
 #   targets:
-#   - name: httpbin
+#   - name: inventory-prd
 #   origins:
 #   - jwt:
 #       issuer: "testing@secure.istio.io"

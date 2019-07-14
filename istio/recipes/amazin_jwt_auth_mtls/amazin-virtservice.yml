@@ -1,0 +1,38 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: api-gateway-vs
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - amazin-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /api
+    route:
+    - destination:
+        host: api-gateway-prd
+        port:
+          number: 8080
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: inventory-vs
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - amazin-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /products
+    route:
+    - destination:
+        host: inventory-prd
+        port:
+          number: 8080
