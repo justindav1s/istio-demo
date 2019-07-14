@@ -11,39 +11,43 @@ function padBase64  {
     echo ${STR}
 }
 
-silent=n
+silent=y
 
 TOKEN=$(./get_token_direct_grant.sh)
-echo $TOKEN
+[ "y" != "$silent" ] && echo $TOKEN
 
 PART2_BASE64=$(echo ${TOKEN} | cut -d"." -f2)
 PART2_BASE64=$(padBase64 ${PART2_BASE64})
-echo ${PART2_BASE64} | base64 -D | jq .
+[ "y" != "$silent" ] && echo ${PART2_BASE64} | base64 -D | jq .
 
 
 HOST=https://istio-ingressgateway-istio-system.apps.192.168.33.10.xip.io/api
 CURLTIMER="curl -sk -w "%{time_total}\\n""
+CURLTIMER="curl -sk -w "%{time_total}\\n" -o /dev/null"
 CURL="curl -sk"
+CURL="curl -sk -o /dev/null"
 
 for i in $(seq 1 1000)
 do
     [ "y" != "$silent" ] && printf "\n\n"
     [ "y" != "$silent" ] && echo Iteration \# ${i}
-    echo LOGIN
+    [ "y" != "$silent" ] && echo CLEAR ALL BASKETS
+    ${CURL} -H "Authorization: Bearer ${TOKEN}" -X DELETE ${HOST}/basket/clearall
+    [ "y" != "$silent" ] && echo LOGIN
     ${CURLTIMER} -H "Authorization: Bearer ${TOKEN}" -X POST -H "Content-Type: application/json" -d "{\"username\":\"justin${i}\",\"password\":\"password\"}" ${HOST}/login
-    echo GET BASKETID
+    [ "y" != "$silent" ] && echo GET BASKETID
     BASKETID=$(${CURL} -H "Authorization: Bearer ${TOKEN}" -X POST -H "Content-Type: application/json" -d "{\"username\":\"justin${i}\",\"password\":\"password\"}" ${HOST}/login | jq .basketId)
-    echo BASKET ID : ${BASKETID}
-    echo LOGOUT
+    [ "y" != "$silent" ] && echo BASKET ID : ${BASKETID}
+    [ "y" != "$silent" ] && echo LOGOUT
     ${CURL} -H "Authorization: Bearer ${TOKEN}" -X DELETE ${HOST}/logout/${i}
-    echo GET BASKET : ${BASKETID}
+    [ "y" != "$silent" ] && echo GET BASKET : ${BASKETID}
     ${CURL} -H "Authorization: Bearer ${TOKEN}" -X GET ${HOST}/basket/get/${BASKETID}
-    echo DELETE BASKET : ${BASKETID}
+    [ "y" != "$silent" ] && echo DELETE BASKET : ${BASKETID}
     ${CURL} -H "Authorization: Bearer ${TOKEN}" -X DELETE -H "Content-Type: application/json" -d "{\"id\":\"${BASKETID}\", \"userId\":\"justin${i}\"}" ${HOST}/basket/remove/${BASKETID}
-    echo GET BASKET : ${BASKETID}
+    [ "y" != "$silent" ] && echo GET BASKET : ${BASKETID}
     ${CURL} -H "Authorization: Bearer ${TOKEN}" -X GET ${HOST}/basket/get/${BASKETID}
 
-    printf "\n\n"
-    echo LOGIN
+    [ "y" != "$silent" ] && printf "\n\n"
+    [ "y" != "$silent" ] && echo LOGIN
     ${CURLTIMER} -H "Authorization: Bearer ${TOKEN}" -X POST -H "Content-Type: application/json" -d "{\"username\":\"justin${i}\",\"password\":\"password\"}" ${HOST}/login
 done
