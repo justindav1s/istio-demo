@@ -28,9 +28,11 @@ for i in $(seq 1 1000)
 do
     [ "y" != "$silent" ] && printf "\n\n"
     [ "y" != "$silent" ] && echo Iteration \# ${i}
-#    ${CURL} -H "Authorization: Bearer ${TOKEN}" -X POST -H "Content-Type: application/json" -d "{\"username\":\"justin${i}\",\"password\":\"password\"}" ${HOST}/login
-    ${CURL} -v -H "Authorization: Bearer ${TOKEN}" -X DELETE ${HOST}/logout/${i}
-    # ${CURL} -H "Authorization: Bearer ${TOKEN}" -X GET ${HOST}/basket/get/${i}
-    # #${CURL} -H "Authorization: Bearer ${TOKEN}" -X DELETE ${HOST}/basket/remove/${i}
-
+    #${CURL} -H "Authorization: Bearer ${TOKEN}" -X POST -H "Content-Type: application/json" -d "{\"username\":\"justin${i}\",\"password\":\"password\"}" ${HOST}/login
+    #${CURL} -H "Authorization: Bearer ${TOKEN}" -X DELETE ${HOST}/logout/${i}
+    #${CURL} -H "Authorization: Bearer ${TOKEN}" -X GET ${HOST}/basket/get/${i}
+    printf "\n\n"
+    ${CURL} -v -H "Authorization: Bearer ${TOKEN}" -X DELETE -H "Content-Type: application/json" -d "{\"id\":\"${i}\", \"userId\":\"justin${i}\"}" ${HOST}/basket/remove/${i}
+    printf "\n\n"
+    #${CURL} -v -H "Authorization: Bearer ${TOKEN}" -X GET ${HOST}/basket/get/${i}
 done

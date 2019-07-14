@@ -3,6 +3,7 @@ package org.jnd.microservices.apigateway.proxies;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jnd.microservices.model.Basket;
+import org.jnd.microservices.model.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -79,6 +80,25 @@ public class BasketProxy {
                         new HttpEntity<byte[]>(headers),
                         new ParameterizedTypeReference<Basket>() {},
                         basketid);
+
+        return exchange;
+    }
+
+    public ResponseEntity<String> removeBasket(Basket basket, HttpHeaders headers) {
+
+        log.debug(">> remove basket : "+basket);
+
+        HttpEntity<Basket> request = new HttpEntity<>(basket, headers);
+
+        ResponseEntity<String> exchange =
+                this.restTemplate.exchange(
+                        "http://"+basket_host+"/basket/remove/{basketid}",
+                        HttpMethod.DELETE,
+                        request,
+                        new ParameterizedTypeReference<String>() {},
+                        basket.getId());
+
+        log.debug("basket delete response : "+exchange.getBody());
 
         return exchange;
     }

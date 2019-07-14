@@ -82,6 +82,13 @@ public class GatewayController {
         return response;
     }
 
+    @RequestMapping(value = "/basket/remove/{basketid}", method = RequestMethod.DELETE, produces = "application/json")
+    ResponseEntity<String> removeBasket(@RequestBody Basket basket, @PathVariable int basketid, @RequestHeader HttpHeaders headers) {
+
+        ResponseEntity<String> response = basketProxy.removeBasket(basket, headers);
+        return response;
+    }
+
     @RequestMapping(value = "/basket/{basketid}/empty", method = RequestMethod.DELETE, produces = "application/json")
     ResponseEntity<?> emptyBasket(@PathVariable int basketid, @RequestHeader HttpHeaders headers) {
 
