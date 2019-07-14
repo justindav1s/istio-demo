@@ -102,4 +102,22 @@ public class BasketProxy {
 
         return exchange;
     }
+
+    public ResponseEntity<String> clearAllBaskets(HttpHeaders headers) {
+
+        log.debug(">> remove all baskets");
+
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        ResponseEntity<String> exchange =
+                this.restTemplate.exchange(
+                        "http://"+basket_host+"/basket/clearall",
+                        HttpMethod.DELETE,
+                        request,
+                        String.class);
+
+        log.debug("remove all baskets response : "+exchange.getBody());
+
+        return exchange;
+    }
 }
