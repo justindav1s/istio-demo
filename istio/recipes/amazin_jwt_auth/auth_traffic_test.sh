@@ -22,7 +22,7 @@ echo ${PART2_BASE64} | base64 -D | jq .
 HOST=https://istio-ingressgateway-istio-system.apps.192.168.33.10.xip.io/api
 CURL="curl -sk"
 
-for i in $(seq 1 10)
+for i in $(seq 1 1000)
 do
     printf "\n\n"
     echo Iteration \# ${i}

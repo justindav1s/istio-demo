@@ -16,3 +16,5 @@ oc adm policy add-scc-to-user privileged -z default -n $PROJECT
 oc apply -f  ${LOC}/samples/httpbin/httpbin.yaml -n $PROJECT
 oc apply -f  ${LOC}/samples/sleep/sleep.yaml -n $PROJECT
 oc adm policy add-scc-to-user privileged -z sleep -n $PROJECT
+
+oc policy add-role-to-user view system:serviceaccount:istio-system:kiali-service-account -n $PROJECT

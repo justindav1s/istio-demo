@@ -1,13 +1,15 @@
 apiVersion: "authentication.istio.io/v1alpha1"
 kind: "Policy"
 metadata:
-  name: "jwt-api-gateway-prd"
+  name: "amazin-jwt-policy"
 spec:
   targets:
   - name: api-gateway-prd
   - name: inventory-prd
   - name: user-prd
-  - name: basket-prd  
+  - name: basket-prd
+  peers:
+  - mtls:
   origins:
   - jwt:
       issuer: "https://sso-sso.apps.ocp.datr.eu/auth/realms/amazin"

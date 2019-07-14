@@ -49,8 +49,13 @@ public class UserProxy {
 
 
     public String logout(int id, HttpHeaders headers) {
-        log.debug("UserProxy logout basket id : "+id);
-        restTemplate.delete("http://"+ user_host +"/user/logout/"+id);
+        log.debug("UserProxy logout user id : "+id);
+        //restTemplate.delete("http://"+ user_host +"/user/logout/"+id, headers);
+        HttpEntity<?> request = new HttpEntity<Object>(headers);
+        ResponseEntity<String> exchange = null;
+        exchange = restTemplate.exchange("http://"+ user_host +"/user/logout/"+id, HttpMethod.DELETE, request, String.class);
+        String response = exchange.getBody();
+        log.debug("UserProxy logout response : "+response);
         return "LOGGED OUT";
     }
 }
