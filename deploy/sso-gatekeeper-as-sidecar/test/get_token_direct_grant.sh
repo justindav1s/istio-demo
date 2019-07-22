@@ -16,7 +16,7 @@ KEYCLOAK=https://sso-sso.apps.192.168.33.10.xip.io
 REALM="amazin"
 GRANT_TYPE="password"
 CLIENT="webapp"
-CLIENT_SECRET="0e8055c5-099d-4d87-91b4-7eb9e08ad680"
+CLIENT_SECRET="323cadf9-6cc6-4693-8145-ca371d816f53"
 USER=$1
 USER_PASSWORD=$2
 
@@ -39,8 +39,8 @@ RESPONSE=$(curl -qsk \
 
 #echo "RESPONSE"=${RESPONSE}
 ACCESS_TOKEN=$(echo ${RESPONSE} | jq -r .access_token)
-#PART2_BASE64=$(echo ${ACCESS_TOKEN} | cut -d"." -f2)
-#PART2_BASE64=$(padBase64 ${PART2_BASE64})
+PART2_BASE64=$(echo ${ACCESS_TOKEN} | cut -d"." -f2)
+PART2_BASE64=$(padBase64 ${PART2_BASE64})
 #echo ${PART2_BASE64} | base64 -D | jq .
 
 echo $ACCESS_TOKEN

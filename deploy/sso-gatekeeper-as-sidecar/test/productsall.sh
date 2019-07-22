@@ -3,7 +3,8 @@
 URL=http://127.0.0.1:8081/api/products/all
 URL=http://127.0.0.1:3000/api/products/all
 URL=https://sso-gatekeeper-amazin-dev.apps.ocp.datr.eu/api/products/all
-URL=http://sso-gatekeeper-inventory-amazin-dev.apps.192.168.33.10.xip.io/products/all
+URL=http://sso-gatekeeper-inventory-amazin.apps.192.168.33.10.xip.io/products/all
+URL=http://sso-gatekeeper-inventory-amazin.apps.192.168.33.10.xip.io/products/all
 
 function padBase64  {
     STR=$1
@@ -27,7 +28,7 @@ PART2_BASE64=$(padBase64 ${PART2_BASE64})
 echo ${PART2_BASE64} | base64 -D | jq .
 
 
-curl -X GET \
+curl -v -X GET \
     -H 'Accept: application/json' \
     -H 'Content-Type: application/json' \
     -H "Authorization: Bearer ${ACCESS_TOKEN}" \

@@ -6,7 +6,7 @@ discovery-url: https://sso-sso.apps.192.168.33.10.xip.io/auth/realms/amazin
 # the client id for the 'client' application
 client-id: webapp
 # the secret associated to the 'client' application
-client-secret: 4067e61d-377b-4995-bdc9-d08381567cf5
+client-secret: 323cadf9-6cc6-4693-8145-ca371d816f53
 # the interface definition you wish the proxy to listen, all interfaces is specified as ':<port>', unix sockets as unix://<REL_PATH>|</ABS PATH>
 listen: :8081
 # a collection of resource i.e. urls that you wish to protect
@@ -27,7 +27,7 @@ resources:
     - GET
     - POST
   roles:
-    - webapp:ROLE_product
+    - webapp:product
   require-any-role: true
 
 - uri: /
@@ -38,5 +38,5 @@ resources:
 
 - uri: /*
   roles:
-    - webapp:ROLE_admin
+    - webapp:admin
 

@@ -45,7 +45,7 @@ objects:
         - env:
           - name: SPRING_PROFILES_ACTIVE
             value: dev
-          image: 'docker-registry.default.svc:5000/amazin-dev/inventory:latest'
+          image: 'docker-registry.default.svc:5000/amazin-images/inventory:latest'
           imagePullPolicy: Always
           livenessProbe:
             failureThreshold: 5
@@ -79,7 +79,7 @@ objects:
           volumeMounts:
           - mountPath: /config
             name: ${APPLICATION_NAME}-config-vol
-        - image: 'docker-registry.default.svc:5000/amazin-dev/sso-gatekeeper:latest'
+        - image: 'docker-registry.default.svc:5000/amazin-images/sso-gatekeeper:latest'
           imagePullPolicy: IfNotPresent
           name: 'sso-gatekeeper'
           ports:
