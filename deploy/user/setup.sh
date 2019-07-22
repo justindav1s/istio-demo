@@ -40,6 +40,6 @@ oc new-app -f ../spring-boot-deploy-template.yaml \
 
 oc set triggers dc/${APP}-${VERSION_LABEL} --remove-all
 
-oc set image dc/${APP}-${VERSION_LABEL} ${APP}=${REGISTRY}/${PROJECT}/${APP}:latest
+oc set image dc/${APP}-${VERSION_LABEL} ${APP}=${REGISTRY}/${PROJECT}-images/${APP}:latest
 
 oc rollout latest dc/${APP}-${VERSION_LABEL}
